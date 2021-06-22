@@ -1,21 +1,20 @@
 import React from 'react'
-import Menu from './Menu'
 
-function Navigation() {
-
+function NavigationSignIn() {
 	return (
 		<>
-			<nav className='relative z-50 flex justify-between px-4 py-4 md:px-8'>
+			<nav className='flex justify-between px-4 py-4 md:px-8'>
 				<div>
 					<img
 						src={process.env.PUBLIC_URL + '/assets/icon.svg'}
 						alt='application logo'
 					/>
 				</div>
-				<div className='relative'>
+            <div>
 					<img
 						src={process.env.PUBLIC_URL + '/assets/profile.svg'}
-						alt='application logo'
+                  alt='application logo'
+                  className='cursor-pointer'
 					/>
 				</div>
 			</nav>
@@ -23,4 +22,4 @@ function Navigation() {
 	)
 }
 
-export default Navigation
+export default NavigationSignIn

@@ -6,6 +6,7 @@ module.exports = {
 		extend: {
 			colors: {
 				blue: {
+					lighter: '#84B7C6',
 					light: '#002f58',
 					dark: '#00213d',
 				},
@@ -15,11 +16,12 @@ module.exports = {
 				yellow: {
 					dark: '#e6bf17',
 				},
+				red: {
+					light: '#EC4530',
+				},
 			},
 			fontFamily: {
-				molengo: ['Molengo', 'serif'],
-				kreon: ['Kreon', 'sans-serif'],
-				'libre-franklin': ['"Libre Franklin"', 'cursive'],
+            poppins: ['Poppins', 'sans-serif'],
 				'ropa-sans': ['"Ropa Sans"', 'serif'],
 			},
 		},
