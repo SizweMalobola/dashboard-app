@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik'
+import firebase from '../../firebase'
+
+let ref = firebase.firestore().collection('users').doc()
 
 const validate = values => {
 	const errors = {}
@@ -27,21 +30,22 @@ const validate = values => {
 }
 
 const initialValues = {
-	name: '',
 	email: '',
 	password: '',
 }
 
 function FormLogin() {
-
-   const formik = useFormik({
+	const formik = useFormik({
 		initialValues,
 		validate,
 		onSubmit: values => {
-			alert(JSON.stringify(values, null, 2))
+			firebase
+				.auth()
+				.signInWithEmailAndPassword(values.email, values.password)
+				.catch(error => console.log('An error occured:', error))
 		},
-   })
-   
+	})
+
 	return (
 		<>
 			<div className='max-w-sm px-6 py-1 mt-2 bg-blue-light rounded-2xl md:px-6 md:mx-6'>
@@ -49,25 +53,6 @@ function FormLogin() {
 					className='flex flex-col items-center'
 					onSubmit={formik.handleSubmit}
 				>
-					<div className='flex flex-col w-full'>
-						<label className='label'>name</label>
-						<input
-							id='name'
-							type='text'
-							name='name'
-							placeholder='e.g. Chris'
-							className='input'
-							onChange={formik.handleChange}
-							value={formik.values.name}
-							onBlur={formik.handleBlur}
-						/>
-						{formik.touched.name && formik.errors.name ? (
-							<div className='flex justify-end px-1 pt-1 text-xs text-red-400 font-ropa-sans'>
-								{formik.errors.name}
-							</div>
-						) : null}
-					</div>
-
 					<div className='flex flex-col w-full'>
 						<label className='label'>email</label>
 						<input

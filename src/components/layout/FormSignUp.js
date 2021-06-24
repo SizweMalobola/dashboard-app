@@ -1,6 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik'
+import firebase from '../../firebase'
+import { v4 as uuidv4 } from 'uuid'
+
+const db = firebase.firestore().collection('users').doc()
+const ref = firebase.auth()
 
 const validate = values => {
 	const errors = {}
@@ -30,18 +35,31 @@ const initialValues = {
 	name: '',
 	email: '',
 	password: '',
+	id: '',
 }
 
 function FormSignUp() {
-
-   const formik = useFormik({
+	const formik = useFormik({
 		initialValues,
 		validate,
 		onSubmit: values => {
-			alert(JSON.stringify(values, null, 2))
+			ref.createUserWithEmailAndPassword(values.email, values.password)
+				.then(response => {
+					console.log('Successful:', response)
+				})
+				.catch(error => {
+					console.log('There was an error:', error)
+				})
+
+			db.set({
+				name: values.name,
+				email: values.email,
+			}).catch(error => {
+				console.log('An error occurred', error)
+			})
 		},
-   })
-   
+	})
+
 	return (
 		<>
 			<div className='max-w-sm px-6 py-2 mt-2 bg-blue-light rounded-2xl md:px-6 md:mx-6'>
