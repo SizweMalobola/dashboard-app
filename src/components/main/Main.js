@@ -1,107 +1,35 @@
 import React from 'react'
 import Navigation from '../layout/Navigation'
+import Time from './Time'
+import Weather from './Weather'
+import Greet from './Greet'
+import Notes from './Notes'
+import Bookmarks from './Bookmarks'
 
 function Main() {
 	return (
-		<div className='h-screen min-h-screen py-2 bg-blue-dark'>
+		<div className='h-screen max-w-full min-h-screen py-2 bg-blue-dark'>
 			<Navigation />
 
-			<main class='px-4 grid grid-cols-6 grid-rows-6 gap-2 h-[90vh]'>
-
-            {/* Time Section */}
-				<section className='flex items-center justify-center col-span-3 row-span-1 rounded-lg bg-blue-light'>
-					<div>
-						<h2 className='text-5xl text-teal-light font-semi-bold font-poppins'>
-							18:02
-						</h2>
-					</div>
-            </section>
-            
-            {/* Weather Section */}
-				<section className='col-span-3 row-span-3 rounded-lg bg-blue-light'>
-               <div>
-                  
-                  {/* Temp and Icon */}
-                  <div className='flex'>
-                     
-                     <div>
-                        <img src={process.env.PUBLIC_URL + 'assets/rain-cloud.svg'} alt="rain cloud"/>
-                     </div>
-                     
-                     <div>
-                        <h2>19</h2>
-                     </div>
-                     
-                  </div>
-                  
-                  {/* Location */}
-                  <div>
-                     <h2>Pretoria <span>za</span></h2>
-                  </div>
-
-                  {/* Other Information */}
-                  <div>
-                     
-                     {/* Humidity & Wind Speed */}
-                     <div className='flex'>
-                        
-                        <div>
-                           <h2>Humidity</h2>
-                        </div>
-
-                        <div>
-                           <h2>Wind speed</h2>
-                        </div>
-
-                     </div>
-                     
-                     {/* Air Pressure & Feels like */}
-                     <div className='flex'>
-
-                        <div>
-                           <h2>Air Pressure</h2>
-                        </div>
-
-                        <div>
-                           <h2>Feels Like</h2>
-                        </div>
-
-                     </div>
-                  </div>
-					</div>
-            </section>
-                                                                              
-            {/* Greeting & Date Section */}
-				<section className='col-span-3 row-span-2 px-2 py-4 rounded-lg bg-blue-light'>
-					<div className='flex flex-col justify-between'>
-						<h2 className='py-2 text-3xl text-white font-poppins'>
-							Hey Chris
-						</h2>
-						<h4 className='pt-3 text-2xl font-poppins text-teal-light'>
-							<span className='block pb-1 text-xs tracking-wider text-yellow-dark font-ropa-sans'>
-								Today is
-							</span>
-							Sunday, 18 May 2019
-                     <span>
-                        <img src={process.env.PUBLIC_URL + 'assets/calender.svg'} alt="calender"
-                        />
-                     </span>
-						</h4>
-					</div>
+			<main class='px-4 xl:px-6 xl:py-4 py-2 grid grid-cols-7 grid-rows-6 xl:gap-5 gap-2 h-[90vh]'>
+				<section className='flex items-center justify-center col-span-3 row-span-1 shadow-xl rounded-3xl xl:order-1 bg-blue-light xl:col-span-2 xl:row-span-2 xl:p-6'>
+					<Time />
 				</section>
 
-            {/* Notes Section */}
-				<section className='col-span-6 row-span-2 rounded-lg bg-blue-light'>
-					<div>
-						<h2>Note Area</h2>
-					</div>
+				<section className='col-span-4 row-span-3 shadow-xl xl:flex-col xl:items-center xl:flex rounded-3xl xl:order-3 xl:row-span-6 xl:col-span-2 bg-blue-light'>
+					<Weather />
 				</section>
 
-            {/* Bookmark Section */}
-				<section className='col-span-6 row-span-1 rounded-lg bg-blue-light '>
-					<div>
-						<h2>Bookmark area</h2>
-					</div>
+				<section className='flex items-start col-span-3 row-span-2 px-2 py-4 shadow-xl rounded-3xl xl:order-2 bg-blue-light xl:col-span-3 xl:row-span-2'>
+					<Greet />
+				</section>
+
+				<section className='col-span-7 row-span-2 shadow-xl rounded-3xl xl:order-4 bg-blue-light xl:col-span-5 xl:row-span-3'>
+					<Notes />
+				</section>
+
+				<section className='flex items-center justify-between col-span-7 row-span-1 px-4 shadow-xl rounded-3xl xl:order-5 bg-blue-light xl:col-span-5 xl:row-span-1'>
+					<Bookmarks />
 				</section>
 			</main>
 		</div>

@@ -1,10 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { useFormik } from 'formik'
 import firebase from '../../firebase'
-import { v4 as uuidv4 } from 'uuid'
+import { useFormik } from 'formik'
+import GoogleButton from '../auth/GoogleButton'
+import SignupButton from '../auth/SignupButton'
 
-const db = firebase.firestore().collection('users').doc()
+const db = firebase.firestore().collection('users')
 const ref = firebase.auth()
 
 const validate = values => {
@@ -35,7 +35,6 @@ const initialValues = {
 	name: '',
 	email: '',
 	password: '',
-	id: '',
 }
 
 function FormSignUp() {
@@ -51,11 +50,20 @@ function FormSignUp() {
 					console.log('There was an error:', error)
 				})
 
-			db.set({
-				name: values.name,
-				email: values.email,
-			}).catch(error => {
-				console.log('An error occurred', error)
+			ref.onAuthStateChanged(user => {
+				if (user) {
+					db.doc(user.uid)
+						.set({
+							id: user.uid,
+							name: values.name,
+							email: values.email,
+						})
+						.catch(error => {
+							console.log('An error occurred', error)
+						})
+				} else {
+					console.log('An error has occurred')
+				}
 			})
 		},
 	})
@@ -68,13 +76,13 @@ function FormSignUp() {
 					onSubmit={formik.handleSubmit}
 				>
 					<div className='flex flex-col w-full'>
-						<label className='label'>name</label>
+						<label className='self-start py-2 text-sm text-blue-lighter font-poppins'>name</label>
 						<input
 							id='name'
 							type='text'
 							name='name'
 							placeholder='e.g. Chris'
-							className='input'
+							className='h-10 px-4 py-2 text-gray-400 transition rounded-lg bg-blue-dark placeholder-blue-light focus:outline-none focus:ring-2 focus:ring-blue-500'
 							onChange={formik.handleChange}
 							value={formik.values.name}
 							onBlur={formik.handleBlur}
@@ -87,13 +95,13 @@ function FormSignUp() {
 					</div>
 
 					<div className='flex flex-col w-full'>
-						<label className='label'>email</label>
+						<label className='self-start py-2 text-sm text-blue-lighter font-poppins'>email</label>
 						<input
 							id='email'
 							type='email'
 							name='email'
 							placeholder='e.g. Chris@myEmail.com'
-							className='input'
+							className='h-10 px-4 py-2 text-gray-400 transition rounded-lg bg-blue-dark placeholder-blue-light focus:outline-none focus:ring-2 focus:ring-blue-500'
 							onChange={formik.handleChange}
 							value={formik.values.email}
 							onBlur={formik.handleBlur}
@@ -106,12 +114,12 @@ function FormSignUp() {
 					</div>
 
 					<div className='flex flex-col w-full'>
-						<label className='label'>password</label>
+						<label className='self-start py-2 text-sm text-blue-lighter font-poppins'>password</label>
 						<input
 							type='password'
 							name='password'
 							placeholder='Must be 6 characters or longer'
-							className=' input'
+							className='h-10 px-4 py-2 text-gray-400 transition rounded-lg bg-blue-dark placeholder-blue-light focus:outline-none focus:ring-2 focus:ring-blue-500'
 							onChange={formik.handleChange}
 							value={formik.values.password}
 							onBlur={formik.handleBlur}
@@ -123,29 +131,9 @@ function FormSignUp() {
 						) : null}
 					</div>
 
-					<div className='w-full pt-4'>
-						<button
-							type='submit'
-							className='w-full px-4 py-2 text-xl text-white transition border-none rounded-lg bg-yellow-dark font-ropa-sans hover:bg-yellow-500 active:bg-yellow-dark focus:outline-none focus:ring-2 focus:ring-yellow-600 active:outline-none'
-						>
-							Sign In
-						</button>
-					</div>
+					<SignupButton />
 
-					<div className='flex items-center self-end pt-4'>
-						<p className='pr-1 text-blue-lighter'>
-							Sign in with Google instead
-						</p>
-						<Link className='focus:outline-none'>
-							<button>
-								<img
-									src={process.env.PUBLIC_URL + 'assets/Google.svg'}
-									alt='sign in with google instead'
-									className='transition transform hover:scale-110 active:scale-100 focus:outline-none'
-								/>
-							</button>
-						</Link>
-					</div>
+					<GoogleButton />
 				</form>
 			</div>
 		</>

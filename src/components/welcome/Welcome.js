@@ -1,16 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import SignUp from '../auth/SignUp'
 import Navigation from '../layout/Navigation'
+import Blob from '../layout/Blob'
 
 function Welcome() {
 	return (
 		<div className='relative z-50 h-screen min-h-screen py-3 overflow-hidden bg-blue-dark'>
-			<img
-				src={process.env.PUBLIC_URL + '/assets/blobs.svg'}
-				alt='blob for aesthetics'
-				className='absolute top-0 right-0 z-0 blob'
-			/>
+         <Blob />
 			<Navigation />
 
 			<main className='flex items-center justify-start min-h-full px-4 md:px-8'>
@@ -25,13 +21,13 @@ function Welcome() {
 
 					<div className='flex flex-col pt-4 md:pt-8 xl:flex-row xl:justify-between xl:items-center'>
 						<Link to='/sign-up'>
-							<button className='text-white button-main bg-yellow-dark hover:bg-yellow-500'>
+							<button className='h-10 text-white transition bg-yellow-dark hover:bg-yellow-500 font-poppins md:h-14 w-36 md:w-48 rounded-xl md:text-xl'>
 								Sign Up
 							</button>
 						</Link>
 
-						<Link to='/sign-in'>
-							<button className='mt-4 border-4 button-main text-yellow-dark border-yellow-dark md:mt-8 xl:mt-0 hover:border-yellow-500 hover:text-yellow-500'>
+						<Link to='/login'>
+							<button className='h-10 mt-4 transition border-4  text-yellow-dark border-yellow-dark md:mt-8 xl:mt-0 hover:border-yellow-500 hover:text-yellow-500 font-poppins md:h-14 w-36 md:w-48 rounded-xl md:text-xl'>
 								Login
 							</button>
 						</Link>

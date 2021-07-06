@@ -2,9 +2,4 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-   .button-main {
-      @apply h-10 transition font-poppins md:h-14 w-36 md:w-48 rounded-xl md:text-xl;
-   }
-}
 

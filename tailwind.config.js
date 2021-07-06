@@ -4,6 +4,9 @@ module.exports = {
 	darkMode: false, // or 'media' or 'class'
 	theme: {
 		extend: {
+			screens: {
+				xxs: '320px',
+			},
 			colors: {
 				blue: {
 					lighter: '#84B7C6',
@@ -21,7 +24,7 @@ module.exports = {
 				},
 			},
 			fontFamily: {
-            poppins: ['Poppins', 'sans-serif'],
+				poppins: ['Poppins', 'sans-serif'],
 				'ropa-sans': ['"Ropa Sans"', 'serif'],
 			},
 		},

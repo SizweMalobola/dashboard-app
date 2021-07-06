@@ -1,9 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { useFormik } from 'formik'
 import firebase from '../../firebase'
+import GoogleButton from '../auth/GoogleButton'
+import LoginButton from '../auth/LoginButton'
 
-let ref = firebase.firestore().collection('users').doc()
+let ref = firebase.auth()
+// const user = firebase.auth().currentUser
 
 const validate = values => {
 	const errors = {}
@@ -39,10 +41,17 @@ function FormLogin() {
 		initialValues,
 		validate,
 		onSubmit: values => {
-			firebase
-				.auth()
-				.signInWithEmailAndPassword(values.email, values.password)
-				.catch(error => console.log('An error occured:', error))
+			ref.signInWithEmailAndPassword(values.email, values.password).catch(
+				error => console.log('An error occurred:', error),
+			)
+
+			ref.onAuthStateChanged(user => {
+				if (user) {
+					console.log('Logged in bro')
+				} else {
+					console.log('Haha it did not work')
+				}
+			})
 		},
 	})
 
@@ -54,13 +63,13 @@ function FormLogin() {
 					onSubmit={formik.handleSubmit}
 				>
 					<div className='flex flex-col w-full'>
-						<label className='label'>email</label>
+						<label className='self-start py-2 text-sm text-blue-lighter font-poppins'>email</label>
 						<input
 							id='email'
 							type='email'
 							name='email'
 							placeholder='e.g. Chris@myEmail.com'
-							className='mt-2 input'
+							className='h-10 px-4 py-2 mt-2 text-gray-400 transition rounded-lg bg-blue-dark placeholder-blue-light focus:outline-none focus:ring-2 focus:ring-blue-500'
 							onChange={formik.handleChange}
 							value={formik.values.email}
 							onBlur={formik.handleBlur}
@@ -73,12 +82,12 @@ function FormLogin() {
 					</div>
 
 					<div className='flex flex-col w-full mt-2'>
-						<label className='label'>password</label>
+						<label className='self-start py-2 text-sm text-blue-lighter font-poppins'>password</label>
 						<input
 							type='password'
 							name='password'
 							placeholder='Must be 6 characters or longer'
-							className='input'
+							className='h-10 px-4 py-2 text-gray-400 transition rounded-lg bg-blue-dark placeholder-blue-light focus:outline-none focus:ring-2 focus:ring-blue-500'
 							onChange={formik.handleChange}
 							value={formik.values.password}
 							onBlur={formik.handleBlur}
@@ -90,29 +99,8 @@ function FormLogin() {
 						) : null}
 					</div>
 
-					<div className='w-full pt-4'>
-						<button
-							type='submit'
-							className='w-full px-4 py-2 text-xl text-white transition border-none rounded-lg bg-yellow-dark font-ropa-sans hover:bg-yellow-500 active:bg-yellow-dark focus:outline-none focus:ring-2 focus:ring-yellow-600 active:outline-none'
-						>
-							Sign In
-						</button>
-					</div>
-
-					<div className='flex items-center self-end pt-4'>
-						<p className='pr-1 text-blue-lighter'>
-							Sign in with Google instead
-						</p>
-						<Link className='focus:outline-none'>
-							<button>
-								<img
-									src={process.env.PUBLIC_URL + 'assets/Google.svg'}
-									alt='sign in with google instead'
-									className='transition transform hover:scale-110 active:scale-100 focus:outline-none'
-								/>
-							</button>
-						</Link>
-					</div>
+					<LoginButton />
+					<GoogleButton />
 				</form>
 			</div>
 		</>
