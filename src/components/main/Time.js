@@ -15,16 +15,13 @@ function Time() {
 
 	function checkFormat(i) {
 		if (i < 10) {
-			i = `0${i}`
+         i = i.toString().padStart(2, '0')
 		}
 		return i
 	}
 
-	const hour = time.getHours()
-	const minute = time.getMinutes()
-
-	checkFormat(hour)
-	checkFormat(minute)
+	const hour = checkFormat(time.getHours())
+	const minute = checkFormat(time.getMinutes())
 	const now = `${hour}:${minute}`
 
 	return (

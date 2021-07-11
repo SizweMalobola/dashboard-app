@@ -2,7 +2,6 @@ import React from 'react'
 import Navigation from '../layout/Navigation'
 import Blob from '../layout/Blob'
 import FormSignUp from '../layout/FormSignUp'
-// import FormSignin from '../layout/FormSignIn'
 
 function SignUp() {
 	

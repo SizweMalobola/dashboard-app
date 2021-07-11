@@ -1,6 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import firebase from '../../firebase'
 
 function Navigation() {
+	const [profile, setProfile] = useState(
+		process.env.PUBLIC_URL + '/assets/profile.svg',
+	)
+
+	useEffect(() => {
+		let db = firebase.firestore().collection('users')
+
+		db.get().then(querySnapshot => {
+			querySnapshot.forEach(doc => {
+				let data = doc.data()
+				setProfile(data.photoUrl)
+			})
+		})
+	}, [])
 
 	return (
 		<>
@@ -12,10 +27,9 @@ function Navigation() {
 					/>
 				</div>
 				<div className='relative'>
-					<img
-						src={process.env.PUBLIC_URL + '/assets/profile.svg'}
-						alt='application logo'
-					/>
+               <div className='flex items-center justify-center w-8 h-8 bg-transparent'>
+               <img src={profile} alt='user profile' className='w-full h-full rounded-full'/>
+               </div>
 				</div>
 			</nav>
 		</>

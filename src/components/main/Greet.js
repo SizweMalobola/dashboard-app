@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from 'react'
+import firebase from '../../firebase'
 
 function Greet() {
 	const [today, setToday] = useState(new Date())
-	// console.log(today)
+	const [name, setName] = useState('User')
+
+	useEffect(() => {
+		const db = firebase.firestore().collection('users')
+
+		db.get().then(querySnapshot => {
+			querySnapshot.forEach(doc => {
+				let data = doc.data()
+				setName(data.name)
+			})
+		})
+	})
 
 	useEffect(() => {
 		let timer = setInterval(() => {
@@ -16,12 +28,11 @@ function Greet() {
 
 	function checkFormat(i) {
 		if (i < 10) {
-			i = `0${i}`
+			i = i.toString().padStart(2, '0')
 		}
 		return i
 	}
 
-	//DAY
 	let dayFormat = { weekday: 'short' }
 	let day = today.toLocaleDateString('en-US', dayFormat)
 
@@ -38,7 +49,7 @@ function Greet() {
 
 	return (
 		<>
-			<div className='pr-1 x align-self-start'>
+			<div className='hidden pr-1 x align-self-start sm:flex'>
 				<img
 					src={process.env.PUBLIC_URL + 'assets/side.svg'}
 					alt='decorative sidelining'
@@ -46,11 +57,11 @@ function Greet() {
 				/>
 			</div>
 			<div className='flex flex-col h-full'>
-				<h2 className='py-3 text-xl text-white sm:py-6 sm:text-3xl md:text-4xl xl:text-5xl font-poppins md:font-medium md:py-4'>
-					Hey Chris
+				<h2 className='text-lg text-white xxxs:py-3 sm:text-2xl md:text-4xl xl:text-3xl font-poppins md:font-medium md:py-4'>
+					Hey {name}
 				</h2>
-				<h4 className='pt-3 text-base md:pt-1 sm:text-3xl md:text-4xl xl:text-3xl font-poppins text-teal-light'>
-					<span className='block pb-1 text-xs tracking-wider sm:text-sm md:text-lg text-yellow-dark font-ropa-sans xl:text-lg'>
+				<h4 className='pt-3 text-lg md:pt-1 sm:text-3xl md:text-4xl xl:text-3xl font-poppins text-teal-light'>
+					<span className='hidden pb-1 text-xs tracking-wider xxxs:block sm:text-sm md:text-lg text-yellow-dark font-ropa-sans xl:text-lg'>
 						Today is
 					</span>
 					{now}

@@ -1,6 +1,5 @@
 import './App.css'
-import React, { useState, useEffect } from 'react'
-import firebase from './firebase'
+import React from 'react'
 import Welcome from './components/welcome/Welcome'
 import Login from './components/auth/Login'
 import SignUp from './components/auth/SignUp'

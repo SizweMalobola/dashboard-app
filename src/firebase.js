@@ -2,15 +2,13 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
 
-
-//https://geo.ipify.org/api/v1?apiKey=at_U8txXEatBuOzqb5Q8UxjRwNr3nheQ&ipAddress=8.8.8.8
 const firebaseConfig = {
-	apiKey: 'AIzaSyCjRJs-5dtxoYQajIpccduyZlTpONv-FWQ',
-	authDomain: 'dashboard-app-afc07.firebaseapp.com',
-	projectId: 'dashboard-app-afc07',
-	storageBucket: 'dashboard-app-afc07.appspot.com',
-	messagingSenderId: '282008719550',
-	appId: '1:282008719550:web:776c586eabc2e31c238eef',
+	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+	authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+	projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+	storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+	appId: process.env.REACT_APP_FIREBASE_APP_ID,
 }
 
 firebase.initializeApp(firebaseConfig)
